@@ -7,6 +7,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 TOKEN = os.getenv("TOKEN")
 ADMIN_ID = int(os.getenv("ADMIN_ID"))
+CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 bot = Bot(token=TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 class GuestForm(StatesGroup):
@@ -47,6 +48,11 @@ async def get_photo(message: types.Message, state: FSMContext):
         photo.file_id,
         caption=f"Фото от: {name}"
     )
+    await bot.send_photo(
+    CHANNEL_ID,
+    photo.file_id,
+    caption=f"Гость: {name}"
+)
     await message.answer(
         "Спасибо 🤍\n\n"
         "Ваше фото сохранено ✨"
