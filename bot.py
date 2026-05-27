@@ -16,20 +16,21 @@ class GuestForm(StatesGroup):
 @dp.message(CommandStart())
 async def start(message: types.Message, state: FSMContext):
     await message.answer(
-        "Добро пожаловать 🤍\n\n"
-        "Совсем скоро состоится юбилей,\n"
-        "и мы собираем фотографии гостей,\n"
-        "которые станут частью этого особенного вечера.\n\n"
-        "Пожалуйста, напишите ваше имя."
-    )
+    "Добро пожаловать 🤍\n\n"
+    "Совсем скоро состоится юбилей,\n"
+    "и мы собираем фотографии гостей,\n"
+    "которые станут частью этого особенного вечера.\n\n"
+    "Пожалуйста, напишите ваше имя и имя вашей супруги✨.\n\n"
+    "(Пример: Жанат-Гульсим)"
+)
     await state.set_state(GuestForm.waiting_for_name)
 @dp.message(GuestForm.waiting_for_name)
 async def get_name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
     await message.answer(
-        f"Спасибо, {message.text} 🤍\n\n"
-        "Теперь отправьте своё фото 📸"
-    )
+    f"Спасибо, {message.text} 🤍\n\n"
+    "Теперь отправьте ваше совместное фото 📸"
+)
     await state.set_state(GuestForm.waiting_for_photo)
 @dp.message(GuestForm.waiting_for_photo)
 async def get_photo(message: types.Message, state: FSMContext):
